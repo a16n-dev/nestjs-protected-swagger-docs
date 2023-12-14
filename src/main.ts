@@ -2,11 +2,14 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
 import * as basicAuth from 'express-basic-auth';
+import {ConfigService} from "@nestjs/config";
 
 const SWAGGER_PATH = '/swagger'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  const swaggerPassword = app.get(ConfigService).get('SWAGGER_PASSWORD');
 
   // Note: It's important that this comes BEFORE calling SwaggerModule.setup
   app.use(
@@ -14,7 +17,7 @@ async function bootstrap() {
       basicAuth({
         challenge: true,
         users: {
-          ['admin']: 'admin',
+          ['admin']: swaggerPassword,
         },
       }),
   );
