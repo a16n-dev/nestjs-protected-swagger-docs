@@ -11,7 +11,7 @@ async function bootstrap() {
 
   const swaggerPassword = app.get(ConfigService).get('SWAGGER_PASSWORD');
 
-  // Note: It's important that this comes BEFORE calling SwaggerModule.setup
+  // Note: It's important that this comes BEFORE calling SwaggerModule.setup()
   app.use(
       [SWAGGER_PATH, `${SWAGGER_PATH}-json`],
       basicAuth({
